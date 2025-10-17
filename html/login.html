@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher World - Login</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .content h1 {
+            color: #333;
+            position: relative;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px #29c93c, 0 0 10px #29c93c, 0 0 15px #29c93c, 0 0 20px #29c93c;
+            }
+
+            100% {
+                text-shadow: 0 0 10px #29c93c, 0 0 20px #29c93c, 0 0 30px #29c93c, 0 0 40px #29c93c;
+            }
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .content {
+            background: rgb(247, 245, 245);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .form {
+            padding: 40px;
+            width: 400px; /* Fixed width for the form */
+            text-align: center; /* Center text in the form */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .password-toggle {
+            margin-top: 5px;
+        }
+
+        .captcha-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .captcha-container label {
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .captcha-elements {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .captcha-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 24px;
+            background-color: #f0f0f0;
+            padding: 10px 20px;
+            border-radius: 5px;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        #captchaInput {
+            padding: 8px 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        #refreshCaptcha {
+            padding: 8px 12px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #refreshCaptcha:hover {
+            background-color: #295686;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #3b5998;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .submit-btn:hover {
+            background-color: #21983c;
+        }
+
+        .links {
+            margin-top: 20px;
+        }
+
+        .icons a {
+            margin: 0 10px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .icons a:hover {
+            color: #29c93c;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="../assets/logos/logo.png" alt="Teacher World Logo">
+                    <h1>Teacher World</h1>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="design.html">Design</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="policy.html">Policy</a></li>
+                        <li><a href="login.html" class="btn-primary">Login</a></li>
+                        <li><a href="register.html" class="btn-secondary">Register</a></li>
+                    </ul>
+                    <div class="mobile-menu">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Form Section -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-form-container">
+                    <h2>Teacher Login</h2>
+                    <div class="form">
+                        <form action="login_submit.php" method="POST" id="loginForm" autocomplete="off">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" name="username" required placeholder="Enter your username" />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email ID</label>
+                                <input type="email" id="email" name="email" required placeholder="Enter your email address" />
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" required placeholder="Enter your password" />
+                                <div class="password-toggle">
+                                    <input type="checkbox" id="showPassword" /> Show Password
+                                </div>
+                            </div>
+                            <div class="form-group captcha-container">
+                                <label for="captcha">Enter the CAPTCHA</label>
+                                <input type="text" id="captchaInput" name="captcha" required placeholder="Enter CAPTCHA text" />
+                                <div id="captcha" class="captcha-text"></div>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="captcha-refresh" id="refreshCaptcha">Refresh CAPTCHA</button>
+                            </div>
+                            <div class="error-message" id="error-message"></div>
+                            <div class="success-message" id="success-message"></div>
+                            <button type="submit" class="submit-btn">Login</button>
+                        </form>
+                        <div class="links">
+                            <p><a href="forgot_password.html">Forgot Password?</a></p>
+                            <p><a href="forgot_username.html">Forgot Username?</a></p>
+                        </div>
+                        <div class="icons">
+                            <br>
+                            <h1><b><i><u>LOGIN WITH</u></i></b></h1>
+                            <a href="https://www.facebook.com/"><ion-icon name="logo-facebook"></ion-icon></a>
+                            <a href="https://www.instagram.com/"><ion-icon name="logo-instagram"></ion-icon></a>
+                            <a href="https://www.twitter.com/"><ion-icon name="logo-twitter"></ion-icon></a>
+                            <a href="https://accounts.google.com/"><ion-icon name="logo-google"></ion-icon></a>
+                            <a href="https://www.skype.com/"><ion-icon name="logo-skype"></ion-icon></a>
+                            <a href="https://www.linkedin.com/"><ion-icon name="logo-linkedin"></ion-icon></a>
+                        </div>
+                        <div class="instructions">
+                            <p>New to the site? <a href="register.html">Sign up</a> to create a new teacher account.</p>
+                            <p><a href="index.html">Back to Home Page</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../assets/logos/logo.png" alt="Teacher World Logo">
+                    <h3>Teacher World</h3>
+                    <p>Empowering educators worldwide</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="design.html">Design</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Lesson Plans</a></li>
+                        <li><a href="#">Worksheets</a></li>
+                        <li><a href="#">Webinars</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-envelope"></i> info@teacherworld.com</p>
+                    <p><i class="fas fa-phone"></i> +91</p>
+                    <p><i class="fas fa-map-marker-alt"></i> ///////</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>&copy; 2025 Teacher World. All Rights Reserved.</p>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+    <script>
+        function generateCaptcha() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+            let captcha = '';                        
+            for (let i = 0; i < 6; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('captcha').textContent = captcha;
+        }
+
+        document.getElementById('refreshCaptcha').addEventListener('click', generateCaptcha);
+        window.onload = function () {
+            generateCaptcha();
+        };
+
+        document.getElementById("showPassword").addEventListener("change", function () {
+            var passwordField = document.getElementById("password");
+            passwordField.type = this.checked ? "text" : "password";
+        });
+
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            var captchaInput = document.getElementById("captchaInput").value;
+            var captchaText = document.getElementById("captcha").textContent;
+            var usernameInput = document.getElementById("username").value;
+            var emailInput = document.getElementById("email").value;
+            var passwordInput = document.getElementById("password").value;
+
+            document.getElementById("error-message").innerText = "";
+            document.getElementById("success-message").innerText = "";
+
+            if (captchaInput !== captchaText) {
+                event.preventDefault();
+                document.getElementById("error-message").innerText = "Incorrect CAPTCHA entered.";
+            }
+
+            if (!usernameInput || !emailInput || !passwordInput) {
+                event.preventDefault();
+                document.getElementById("error-message").innerText = "Please fill in all fields.";
+            }
+
+            if (passwordInput.length < 8) {
+                event.preventDefault();
+                document.getElementById("error-message").innerText = "Password must be at least 8 characters.";
+            }
+
+            if (captchaInput === captchaText && usernameInput && emailInput && passwordInput.length >= 8) {
+                document.getElementById("success-message").innerText = "Form submitted successfully!";
+            }
+        });
+    </script>
+</body>
+</html>

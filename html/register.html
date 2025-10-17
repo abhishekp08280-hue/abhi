@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Teacher World</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .content h1 {
+            color: #333;
+            position: relative;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px #29c93c, 0 0 10px #29c93c, 0 0 15px #29c93c, 0 0 20px #29c93c;
+            }
+
+            100% {
+                text-shadow: 0 0 10px #29c93c, 0 0 20px #29c93c, 0 0 30px #29c93c, 0 0 40px #29c93c;
+            }
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .content {
+            background: rgb(247, 245, 245);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .form-group button {
+            background-color: #3b5998;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .password-field button {
+            position: absolute;
+            right: 10px;
+            top: 12px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            width: auto;
+            padding: 0;
+        }
+
+        .password-toggle {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .terms-checkbox input {
+            margin-top: 4px;
+            width: auto;
+        }
+
+        .auth-redirect {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .info {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="../assets/logos/logo.png" alt="Teacher World Logo">
+                    <h1>Teacher World</h1>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="design.html">Design</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="policy.html">Policy</a></li>
+                        <li><a href="login.html" class="btn-primary">Login</a></li>
+                        <li><a href="register.html" class="btn-secondary">Register</a></li>
+                    </ul>
+                    <div class="mobile-menu">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Registration Form Section -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-form-container">
+                    <h2>Create a Teacher Account</h2>
+                    <div class="social-login">
+                        <button class="google-btn">
+                            <i class="fab fa-google"></i> Register with Google
+                        </button>
+                        <button class="facebook-btn">
+                            <i class="fab fa-facebook-f"></i> Register with Facebook
+                        </button>
+                    </div>
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+                    <form action="register.php" method="POST" id="registerForm" autocomplete="off">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" required placeholder="Enter your username">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="password-field">
+                                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                                <button type="button" class="toggle-password">
+                                    <i class="far fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <div class="password-field">
+                                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                                <button type="button" class="toggle-password">
+                                    <i class="far fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="terms-checkbox">
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <label for="terms">I agree to the <a href="terms.html">Terms of Service</a> and <a href="policy.html">Privacy Policy</a></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn-primary">Register</button>
+                        </div>
+                    </form>
+                    <div class="auth-redirect">
+                        <p>Already have an account? <a href="login.html">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info-section">
+        <div class="container">
+            <div class="info">
+                <h2>Registration Information</h2>
+                <p>To register for a Teacher World account, please fill out the form above with your desired username, email address, and password. After submitting the form, you will be able to access our teaching resources and community immediately.</p>
+                <p>Join our community of educators and start accessing our teaching resources and networking opportunities.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../assets/logos/logo.png" alt="Teacher World Logo">
+                    <h3>Teacher World</h3>
+                    <p>Empowering educators worldwide</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="design.html">Design</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Lesson Plans</a></li>
+                        <li><a href="#">Worksheets</a></li>
+                        <li><a href="#">Webinars</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-envelope"></i> info@teacherworld.com</p>
+                    <p><i class="fas fa-phone"></i> +91</p>
+                    <p><i class="fas fa-map-marker-alt"></i> /////</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>&copy; 2025 Teacher World. All Rights Reserved.</p>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle password visibility
+        document.querySelectorAll(".toggle-password").forEach(function(button) {
+            button.addEventListener("click", function() {
+                const passwordField = this.parentElement.querySelector("input");
+                const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+                passwordField.setAttribute("type", type);
+                this.querySelector("i").classList.toggle("fa-eye");
+                this.querySelector("i").classList.toggle("fa-eye-slash");
+            });
+        });
+        
+        // Register form submission
+        document.getElementById("registerForm").addEventListener("submit", function(e) {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert("Passwords do not match!");
+                return;
+            }
+            
+            if (password.length < 8) {
+                e.preventDefault();
+                alert("Password must be at least 8 characters long!");
+                return;
+            }
+            
+            // If validation passes, show success message
+            alert("Registration successful! You can now login with your credentials.");
+            // Redirect to login page
+            setTimeout(function() {
+                window.location.href = "login.html";
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
