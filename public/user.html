@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Teacher Job Portal</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/images/logo.svg" alt="Teacher Portal" class="logo">
+                <span>Teacher Portal</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="#dashboard" class="nav-link active">Dashboard</a></li>
+                <li><a href="#jobs" class="nav-link">Jobs</a></li>
+                <li><a href="#materials" class="nav-link">Materials</a></li>
+                <li><a href="#sessions" class="nav-link">Sessions</a></li>
+                <li><a href="#" class="nav-link" id="logoutBtn">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Welcome back, <span id="userName">User</span>!</h1>
+                <p>Manage your profile, applications, and more</p>
+            </div>
+
+            <!-- Dashboard Tabs -->
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-tab="profile">Profile</button>
+                <button class="tab-btn" data-tab="jobs">Jobs</button>
+                <button class="tab-btn" data-tab="materials">Materials</button>
+                <button class="tab-btn" data-tab="sessions">Sessions</button>
+            </div>
+
+            <!-- Profile Tab -->
+            <div id="profile-tab" class="tab-content active">
+                <div class="profile-section">
+                    <div class="profile-card">
+                        <h2>Personal Details</h2>
+                        <form id="profileForm" class="profile-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" id="name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" name="phone" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" name="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="qualification">Qualification</label>
+                                    <input type="text" id="qualification" name="qualification" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="bio">Bio</label>
+                                <textarea id="bio" name="bio" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Profile</button>
+                        </form>
+                    </div>
+
+                    <div class="profile-card">
+                        <h2>Resume & Certificates</h2>
+                        <div class="file-upload-section">
+                            <div class="file-upload">
+                                <label for="resume">Upload Resume (PDF)</label>
+                                <input type="file" id="resume" accept=".pdf" onchange="uploadResume()">
+                                <div class="file-info" id="resumeInfo"></div>
+                            </div>
+                            <div class="file-upload">
+                                <label for="certificate">Upload Certificate</label>
+                                <input type="file" id="certificate" accept=".pdf,.jpg,.png" onchange="uploadCertificate()">
+                                <input type="text" id="certTitle" placeholder="Certificate Title" style="margin-top: 10px;">
+                            </div>
+                        </div>
+                        <div class="certificates-list" id="certificatesList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jobs Tab -->
+            <div id="jobs-tab" class="tab-content">
+                <div class="jobs-section">
+                    <h2>Job Applications</h2>
+                    <div class="jobs-list" id="jobsList">
+                        <!-- Jobs will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Materials Tab -->
+            <div id="materials-tab" class="tab-content">
+                <div class="materials-section">
+                    <h2>Study Materials</h2>
+                    <div class="materials-upload">
+                        <h3>Upload New Material</h3>
+                        <form id="materialForm" class="material-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="materialTitle">Title</label>
+                                    <input type="text" id="materialTitle" name="title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="materialSubject">Subject</label>
+                                    <input type="text" id="materialSubject" name="subject" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="materialClass">Class/Grade</label>
+                                    <input type="text" id="materialClass" name="classGrade" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="materialCategory">Category</label>
+                                    <select id="materialCategory" name="category" required>
+                                        <option value="notes">Notes</option>
+                                        <option value="question-paper">Question Paper</option>
+                                        <option value="syllabus">Syllabus</option>
+                                        <option value="reference">Reference</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="materialDescription">Description</label>
+                                <textarea id="materialDescription" name="description" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="materialFile">File</label>
+                                <input type="file" id="materialFile" name="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Upload Material</button>
+                        </form>
+                    </div>
+                    <div class="materials-list" id="materialsList">
+                        <!-- Materials will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sessions Tab -->
+            <div id="sessions-tab" class="tab-content">
+                <div class="sessions-section">
+                    <h2>Live Sessions</h2>
+                    <div class="sessions-actions">
+                        <button class="btn btn-primary" onclick="showCreateSessionModal()">Create Session</button>
+                    </div>
+                    <div class="sessions-list" id="sessionsList">
+                        <!-- Sessions will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Create Session Modal -->
+    <div id="createSessionModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create Live Session</h3>
+                <button class="close-btn" onclick="closeCreateSessionModal()">&times;</button>
+            </div>
+            <form id="createSessionForm" class="session-form">
+                <div class="form-group">
+                    <label for="sessionTitle">Session Title</label>
+                    <input type="text" id="sessionTitle" name="title" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sessionSubject">Subject</label>
+                        <input type="text" id="sessionSubject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sessionClass">Class/Grade</label>
+                        <input type="text" id="sessionClass" name="classGrade" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sessionDate">Date</label>
+                        <input type="date" id="sessionDate" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sessionTime">Time</label>
+                        <input type="time" id="sessionTime" name="time" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sessionDuration">Duration (minutes)</label>
+                    <input type="number" id="sessionDuration" name="duration" min="15" max="480" required>
+                </div>
+                <div class="form-group">
+                    <label for="sessionDescription">Description</label>
+                    <textarea id="sessionDescription" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeCreateSessionModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Session</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Teacher Portal</h3>
+                    <p>Connecting teachers with opportunities</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Teacher Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>
