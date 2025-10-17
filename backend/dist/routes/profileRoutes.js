@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const express_validator_1 = require("express-validator");
+const auth_1 = require("../middleware/auth");
+const profileController_1 = require("../controllers/profileController");
+const router = (0, express_1.Router)();
+router.get('/teachers/me', (0, auth_1.requireAuth)(['teacher']), profileController_1.getTeacherMe);
+router.put('/teachers/me', (0, auth_1.requireAuth)(['teacher']), (0, express_validator_1.body)('name').optional().isString(), (0, express_validator_1.body)('phone').optional().isString(), (0, express_validator_1.body)('city').optional().isString(), (0, express_validator_1.body)('qualification').optional().isString(), profileController_1.updateTeacherMe);
+router.get('/institutions/me', (0, auth_1.requireAuth)(['institution']), profileController_1.getInstitutionMe);
+router.put('/institutions/me', (0, auth_1.requireAuth)(['institution']), (0, express_validator_1.body)('org_name').optional().isString(), (0, express_validator_1.body)('contact_person').optional().isString(), (0, express_validator_1.body)('city').optional().isString(), (0, express_validator_1.body)('contact_info').optional().isString(), (0, express_validator_1.body)('description').optional().isString(), profileController_1.updateInstitutionMe);
+exports.default = router;

@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const express_validator_1 = require("express-validator");
+const auth_1 = require("../middleware/auth");
+const materialController_1 = require("../controllers/materialController");
+const router = (0, express_1.Router)();
+router.post('/materials', (0, auth_1.requireAuth)(['teacher', 'institution']), (0, express_validator_1.body)('title').isString(), (0, express_validator_1.body)('subject').isString(), (0, express_validator_1.body)('classGrade').isString(), materialController_1.uploadMaterialMeta);
+router.get('/materials', materialController_1.listMaterials);
+exports.default = router;

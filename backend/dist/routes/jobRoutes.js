@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const express_validator_1 = require("express-validator");
+const auth_1 = require("../middleware/auth");
+const jobController_1 = require("../controllers/jobController");
+const router = (0, express_1.Router)();
+router.post('/jobs', (0, auth_1.requireAuth)(['institution']), (0, express_validator_1.body)('title').isString(), (0, express_validator_1.body)('description').isString(), (0, express_validator_1.body)('qualifications').optional().isString(), (0, express_validator_1.body)('city').optional().isString(), (0, express_validator_1.body)('salary').optional().isString(), (0, express_validator_1.body)('tags').optional().isArray(), jobController_1.createJob);
+router.get('/jobs', jobController_1.searchJobs);
+router.post('/jobs/:id/apply', (0, auth_1.requireAuth)(['teacher']), (0, express_validator_1.body)('coverLetter').optional().isString(), jobController_1.applyJob);
+router.get('/institutions/jobs', (0, auth_1.requireAuth)(['institution']), jobController_1.getInstitutionJobs);
+router.get('/institutions/jobs/:id/applications', (0, auth_1.requireAuth)(['institution']), jobController_1.getJobApplications);
+exports.default = router;
