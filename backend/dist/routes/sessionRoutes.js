@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const express_validator_1 = require("express-validator");
+const auth_1 = require("../middleware/auth");
+const sessionController_1 = require("../controllers/sessionController");
+const router = (0, express_1.Router)();
+router.post('/sessions', (0, auth_1.requireAuth)(['teacher', 'institution']), (0, express_validator_1.body)('title').isString(), (0, express_validator_1.body)('startTime').isISO8601(), (0, express_validator_1.body)('duration').isInt({ min: 1 }), sessionController_1.createSession);
+router.get('/sessions/:id', sessionController_1.getSession);
+exports.default = router;

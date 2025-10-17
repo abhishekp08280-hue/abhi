@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const express_validator_1 = require("express-validator");
+const authController_1 = require("../controllers/authController");
+const router = (0, express_1.Router)();
+router.post('/register', (0, express_validator_1.body)('email').isEmail(), (0, express_validator_1.body)('password').isLength({ min: 6 }), (0, express_validator_1.body)('role').isIn(['teacher', 'institution']), authController_1.register);
+router.post('/verify-otp', (0, express_validator_1.body)('email').isEmail(), (0, express_validator_1.body)('otp').isLength({ min: 4, max: 8 }), authController_1.verifyOtp);
+router.post('/login', (0, express_validator_1.body)('email').isEmail(), (0, express_validator_1.body)('password').isLength({ min: 6 }), authController_1.login);
+router.post('/refresh', (0, express_validator_1.body)('refreshToken').isString(), authController_1.refresh);
+router.post('/logout', (0, express_validator_1.body)('refreshToken').isString(), authController_1.logout);
+exports.default = router;
