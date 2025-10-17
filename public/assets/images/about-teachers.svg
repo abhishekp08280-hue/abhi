@@ -1,0 +1,10 @@
+<svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="300" height="200" fill="#f8f9fa"/>
+<circle cx="100" cy="80" r="30" fill="#667eea"/>
+<rect x="70" y="110" width="60" height="40" rx="5" fill="#667eea"/>
+<circle cx="200" cy="80" r="30" fill="#764ba2"/>
+<rect x="170" y="110" width="60" height="40" rx="5" fill="#764ba2"/>
+<circle cx="150" cy="80" r="30" fill="#5a6fd8"/>
+<rect x="120" y="110" width="60" height="40" rx="5" fill="#5a6fd8"/>
+<text x="150" y="170" text-anchor="middle" font-family="Arial" font-size="14" fill="#333">Our Team</text>
+</svg>
