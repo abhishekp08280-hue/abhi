@@ -18,9 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan('dev'));
 
-const otpLimiter = rateLimit({ windowMs: 60 * 1000, max: 1 });
-app.use('/api/auth/register', otpLimiter);
-app.use('/api/auth/verify-otp', otpLimiter);
+const registerLimiter = rateLimit({ windowMs: 60 * 1000, max: 5 });
+app.use('/api/auth/register', registerLimiter);
 
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });

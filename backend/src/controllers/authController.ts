@@ -2,13 +2,8 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import dayjs from 'dayjs';
 import { User } from '../models/User';
-import { Otp } from '../models/Otp';
 import { RefreshToken } from '../models/RefreshToken';
-import { generateOtp, hashOtp, verifyOtp as verifyOtpHash } from '../utils/otp';
-import { sendOtpEmail } from '../services/mailService';
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../utils/jwt';
-
-const OTP_TTL_MINUTES = 10;
 
 export async function register(req: Request, res: Response) {
   try {
@@ -19,47 +14,8 @@ export async function register(req: Request, res: Response) {
     if (existing) return res.status(409).json({ message: 'User already exists' });
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = await User.create({ email, passwordHash, role, isVerified: false });
-
-    const otp = generateOtp();
-    const otpHash = await hashOtp(otp);
-    await Otp.create({
-      userId: user._id,
-      otpHash,
-      purpose: 'register',
-      expiresAt: dayjs().add(OTP_TTL_MINUTES, 'minute').toDate(),
-      used: false,
-    });
-
-    await sendOtpEmail(email, otp);
-
-    res.status(201).json({ message: 'User created. OTP sent to email.' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-}
-
-export async function verifyOtp(req: Request, res: Response) {
-  try {
-    const { email, otp } = req.body as { email: string; otp: string };
-    const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: 'User not found' });
-
-    const record = await Otp.findOne({ userId: user._id, purpose: 'register', used: false }).sort({ createdAt: -1 });
-    if (!record) return res.status(400).json({ message: 'OTP not found' });
-    if (record.expiresAt.getTime() < Date.now()) return res.status(400).json({ message: 'OTP expired' });
-
-    const ok = await verifyOtpHash(otp, record.otpHash);
-    if (!ok) return res.status(400).json({ message: 'Invalid OTP' });
-
-    record.used = true;
-    await record.save();
-
-    user.isVerified = true;
-    await user.save();
-
-    res.json({ message: 'Email verified. You can now login.' });
+    const user = await User.create({ email, passwordHash, role, isVerified: true });
+    res.status(201).json({ message: 'User created.' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Internal server error' });
@@ -71,7 +27,6 @@ export async function login(req: Request, res: Response) {
     const { email, password } = req.body as { email: string; password: string };
     const user = await User.findOne({ email });
     if (!user) return res.status(401).json({ message: 'Invalid credentials' });
-    if (!user.isVerified) return res.status(401).json({ message: 'Email not verified' });
 
     const ok = await bcrypt.compare(password, user.passwordHash);
     if (!ok) return res.status(401).json({ message: 'Invalid credentials' });
